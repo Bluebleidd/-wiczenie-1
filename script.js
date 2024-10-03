@@ -9,6 +9,8 @@ element3.setAttribute("draggable", "true");
 element3.addEventListener("dragstart", dragStart);
 
 const dropZoneOne = document.getElementById("ex3_one");
+dropZoneOne.addEventListener("dragover", dragOver);
+dropZoneOne.addEventListener("drop", drop);
 
 const dropZoneTwo = document.getElementById("ex3_two");
 dropZoneTwo.addEventListener("dragover", dragOver);
@@ -57,5 +59,8 @@ function drop(event) {
   event.preventDefault();
   const data = event.dataTransfer.getData("text/plain");
   const draggedElement = document.getElementById(data);
-  dropZoneTwo.appendChild(draggedElement);
+
+  if (event.target == dropZoneOne || event.target == dropZoneTwo) {
+    event.target.appendChild(draggedElement);
+  }
 }
