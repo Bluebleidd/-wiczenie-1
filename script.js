@@ -4,6 +4,16 @@ element1.addEventListener("click", ex1Click);
 const element2 = document.getElementById("ex2_text");
 element2.addEventListener("input", ex2Validation);
 
+const element3 = document.getElementById("ex3_element");
+element3.setAttribute("draggable", "true");
+element3.addEventListener("dragstart", dragStart);
+
+const dropZoneOne = document.getElementById("ex3_one");
+
+const dropZoneTwo = document.getElementById("ex3_two");
+dropZoneTwo.addEventListener("dragover", dragOver);
+dropZoneTwo.addEventListener("drop", drop);
+
 function ex1Click() {
   for (let i = 0; i < 10; i++) {
     document.getElementById("ex1_content").innerHTML += "" + i;
@@ -33,4 +43,19 @@ function ex2Validation() {
       element.innerHTML = "Numer telefonu jest poprawny";
     }
   }
+}
+
+function dragStart(event) {
+  event.dataTransfer.setData("text/plain", event.target.id);
+}
+
+function dragOver(event) {
+  event.preventDefault();
+}
+
+function drop(event) {
+  event.preventDefault();
+  const data = event.dataTransfer.getData("text/plain");
+  const draggedElement = document.getElementById(data);
+  dropZoneTwo.appendChild(draggedElement);
 }
